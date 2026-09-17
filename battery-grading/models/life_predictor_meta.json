@@ -1,0 +1,16 @@
+{
+  "feature_names": [
+    "ir_at_window_end",
+    "ir_slope",
+    "qd_at_window_end",
+    "qd_slope",
+    "qd_variance",
+    "tavg_mean",
+    "chargetime_mean",
+    "qd_fade_ratio"
+  ],
+  "early_cycle_window": 100,
+  "test_mae_cycles": 106.0,
+  "test_r2": 0.712,
+  "n_training_batteries": 138
+}
