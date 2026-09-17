@@ -120,12 +120,16 @@ st.markdown(
        separate `*` rule forces every text node inside - the closed
        value, not just the box - to the light theme color too. */
     div[data-baseweb="select"],
-    div[data-baseweb="select"] div {
+    div[data-baseweb="select"] div,
+    div[data-testid="stSelectbox"] div[data-baseweb="select"],
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] div {
         background-color: var(--bg-panel-2) !important;
         border-color: var(--border) !important;
+        box-shadow: none !important;
     }
 
-    div[data-baseweb="select"] * {
+    div[data-baseweb="select"] *,
+    div[data-testid="stSelectbox"] * {
         color: var(--text) !important;
     }
 
