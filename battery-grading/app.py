@@ -22,6 +22,15 @@ from models.life_predictor import is_available as ml_model_available
 from models.life_predictor import predict_total_cycle_life
 from models.soh_estimator import estimate_degradation_rate, estimate_soh
 
+# Resolved from this file's own location, not the process's working
+# directory - deployment platforms (e.g. Streamlit Community Cloud) run
+# the app from the repo root, not from inside this folder, so a plain
+# relative path like "sample_data/..." breaks there even though it
+# works fine when run locally with `streamlit run app.py` from this
+# folder. Every path into sample_data/ below is built from BASE_DIR
+# so it resolves correctly either way.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 st.set_page_config(
     page_title="Battery Grading",
     page_icon="⚡",
@@ -260,9 +269,9 @@ with st.sidebar:
             ["Healthy battery", "Medium wear battery", "Degraded battery"],
         )
         sample_map = {
-            "Healthy battery": "sample_data/battery_healthy.csv",
-            "Medium wear battery": "sample_data/battery_medium.csv",
-            "Degraded battery": "sample_data/battery_degraded.csv",
+            "Healthy battery": os.path.join(BASE_DIR, "sample_data", "battery_healthy.csv"),
+            "Medium wear battery": os.path.join(BASE_DIR, "sample_data", "battery_medium.csv"),
+            "Degraded battery": os.path.join(BASE_DIR, "sample_data", "battery_degraded.csv"),
         }
         csv_path = sample_map[sample_choice]
 
