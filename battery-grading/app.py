@@ -107,11 +107,50 @@ st.markdown(
 
     /* The closed select box itself (the box you click to open the
        dropdown) also needs an explicit dark background + border, so
-       it doesn't default to white before it's opened. */
-    div[data-baseweb="select"] > div {
+       it doesn't default to white before it's opened.
+
+       NOTE: baseweb nests the visible "control" box one or two divs
+       deeper than the outer [data-baseweb="select"] wrapper (the
+       wrapper itself is just a transparent layout shell). A
+       `> div` (direct-child-only) selector missed that deeper layer,
+       which is why some selectboxes (e.g. the "Simulated battery
+       condition" dropdown) still rendered white. Using a descendant
+       selector on every div inside reaches the actual control
+       regardless of how many wrapper layers baseweb adds, and a
+       separate `*` rule forces every text node inside - the closed
+       value, not just the box - to the light theme color too. */
+    div[data-baseweb="select"],
+    div[data-baseweb="select"] div {
+        background-color: var(--bg-panel-2) !important;
+        border-color: var(--border) !important;
+    }
+
+    div[data-baseweb="select"] * {
+        color: var(--text) !important;
+    }
+
+    /* st.button ships with Streamlit's default light button style
+       (white/light-gray background, dark text) and had no dark-theme
+       rule at all, so every button - "Generate & Read", "Connect &
+       Read", etc. - stood out as a pale box against the dark
+       sidebar. */
+    .stButton > button {
         background-color: var(--bg-panel-2) !important;
         color: var(--text) !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    .stButton > button:hover {
+        background-color: var(--bg) !important;
+        color: var(--accent) !important;
+        border-color: var(--accent) !important;
+    }
+
+    .stButton > button:disabled {
+        background-color: var(--bg-panel) !important;
+        color: var(--text-dim) !important;
         border-color: var(--border) !important;
+        opacity: 0.6;
     }
 
     /* st.file_uploader (used by the "CSV upload" sidebar option) is
